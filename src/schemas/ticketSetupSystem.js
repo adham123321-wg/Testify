@@ -8,8 +8,13 @@ let TicketSetup = new Schema({
     Handlers: String,
     Everyone: String,
     Description: String,
-    Button: String,
-    Emoji: String,
+    Buttons: [
+        {
+            CustomId: String,
+            Label: String,
+            Emoji: String,
+        }
+    ],
 })
 
 module.exports = model('TicketSetup', TicketSetup);
