@@ -1,5 +1,4 @@
 const { EmbedBuilder, MessageFlags, PermissionFlagsBits } = require("discord.js");
-const blacklistSchema = require("../../schemas/blacklistSystem");
 const { color, getTimestamp } = require('../../utils/loggingEffects.js');
 const { checkDmUsability } = require("../../utils/commandParams/dmCommandCheck.js");
 const { checkUnderDevelopment } = require("../../utils/commandParams/underDevelopmentCheck.js");
@@ -22,27 +21,6 @@ module.exports = {
         }
         
         if (!interaction.isCommand()) return;
-
-        const userData = await blacklistSchema.findOne({
-            userId: interaction.user.id,
-        });
-
-        if (userData) {
-            const embed = new EmbedBuilder()
-            .setAuthor({ name: `Blacklist System` })
-            .setTitle(`You are blacklisted from using ${client.user.username}`)
-            .setDescription(`Reason: ${userData.reason}`)
-            .setColor(client.config.embedColor)
-            .setFooter({ text: `You are blacklisted from using this bot` })
-            .setTimestamp();
-
-            const reply = await interaction.reply({ embeds: [embed], withResponse: true });
-            setTimeout(async () => {
-                await reply.delete();
-            }, 5000);
-
-            return;
-        }
 
         const command = client.commands.get(interaction.commandName);
 
@@ -94,4 +72,4 @@ module.exports = {
             }
         }
     },
-};
+};;
